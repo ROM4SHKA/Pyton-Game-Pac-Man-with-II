@@ -53,7 +53,7 @@ class PacMan(pygame.sprite.Sprite):
             else:
                 self.cur_img = self._down_image
 
-    def countPoints(self,matrix, score, point_rects):
+    def countPoints(self, matrix, score, point_rects):
         for p in point_rects:
             if self.rect.collidepoint(p.center):
                 score += 1
