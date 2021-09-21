@@ -115,21 +115,20 @@ class Ghost(pygame.sprite.Sprite):
             if len(visited) > 0:
                 current = visited[-1]
                 if current[0] == pacman_X and current[1] == pacman_Y:
-                    if len(ghost_pass) < len(visited):
+                    if len(ghost_pass) > len(visited) or len(ghost_pass) == 0:
                         ghost_pass.clear()
                         for i in visited:
                             ghost_pass.append(i)
-                        visited.pop()
                         continue
 
                 if self._movematrix[current[1]][current[0]+1]!= '#':
-                    if nodes_value.get(current[1]* X + current[0]+1) == None or nodes_value.get(current[1]* X + current[0]+1) > nodes_value[current[1]* X + current[0]]  + 1:
+                    if nodes_value.get(current[1]* X + current[0]+1) == None or nodes_value[current[1]* X + current[0]+1] > nodes_value[current[1]* X + current[0]] + 1:
                         visited.append([current[0] + 1,current[1]])
                         nodes_value[current[1] * X + current[0]+1] = nodes_value[current[1] * X + current[0]] + 1
 
                         continue
                 if self._movematrix[current[1]][current[0] - 1]!= '#':
-                    if nodes_value.get(current[1]* X + current[0]-1) == None or nodes_value[current[1]* X + current[0]-1] >nodes_value[current[1]* X + current[0]]  + 1:
+                    if nodes_value.get(current[1]* X + current[0]-1) == None or nodes_value[current[1]* X + current[0]-1] > nodes_value[current[1]* X + current[0]]  + 1:
                         visited.append([current[0] - 1, current[1]])
                         nodes_value[current[1] * X + current[0] - 1] = nodes_value[current[1] * X + current[0]] + 1
 
