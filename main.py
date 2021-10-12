@@ -12,7 +12,6 @@ WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 score = 0
 pygame.init()
-print(pygame.font.get_fonts())
 sc = pygame.display.set_mode((W, H))
 pygame.display.set_caption("Pac-Man")
 pygame.display.set_icon(pygame.image.load("Images/Pac_man.bmp"))
@@ -62,7 +61,7 @@ def level_creator():
     start_y = randint(2,8)
     visited = []
     visited.append([start_x, start_y])
-    for i in range(0,50):
+    while len(visited) > 0:
         if len(visited) > 0:
             current = visited[-1]
         nodes_for_check = []
@@ -127,7 +126,7 @@ def level_creator():
 
 level1 = level_creator()
 
-hero = PacMan(level1, "Images/MainHeroPac.png")
+hero = PacMan(level1, "Images/MainHeroPac.png", sc)
 ghost = Ghost(level1, "Images/ghost.png", sc)
 level = Level(sc, bloc, bloc_rect, level1)
 
@@ -153,13 +152,15 @@ while running:
         sc_text = f.render('SCORE:' + str(score), 1, WHITE, BLACK)
         t_rect = sc_text.get_rect(topleft = (20,520))
         STATUS = hero.dethTrigger(ghost.rect)
-        hero.MovePac()
+
         sc.fill(BLACK)
         ghost.moveGhost(hero.rect.center[0], hero.rect.center[1])
         ghost.draw_pass()
         level.draw_level()
-        #points_rects = level.draw_points()
-        #score = hero.countPoints(level1, score, points_rects)
+        points_rects = level.draw_points()
+        score = hero.countPoints(level1, score, points_rects)
+        ghost.draw_pass()
+        hero.movePacmanAI()
         sc.blit(ghost.cur_img, ghost.rect)
         sc.blit(hero.cur_img, hero.rect)
         sc.blit(sc_text, t_rect)

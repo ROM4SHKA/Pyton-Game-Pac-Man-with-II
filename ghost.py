@@ -172,7 +172,7 @@ class Ghost(pygame.sprite.Sprite):
 
         return availableWays
     def moveGhost(self, P_x, P_y):
-        stat = 0
+
         func = self._DFS
         if self.algotitm ==0:
             func = self._DFS
